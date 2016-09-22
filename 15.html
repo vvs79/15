@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+
+  <title>15</title>
+
+
+<body ng-app="myApp">
+<div>
+    <p class='text-center'>
+
+<div class="container-fluid" ng-controller='gCtrl'>
+    <!--div ng-repeat='nn in numbers'-->
+
+    <div id='num{{n}}' class='number' ng-repeat='n in numbers' ng-click='moveNum($index)'><p class='text-center'>{{n}}</p></div>
+    <!--/div-->
+</div>
+
+  </p>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+angular.module("myApp", []).
+controller('gCtrl', function($scope, $timeout){
+	$scope.numbers=[];//[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0];
+
+
+
+
+  while ($scope.numbers.length < 16) {
+    var n =  Math.round( Math.random() * 15);
+    if ($scope.numbers.indexOf(n) < 0) $scope.numbers.push(n);
+  }
+  //$scope.numbers=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,0,15];
+
+  // var arr1 = [];
+  // var arr2 = [];
+  // var arr3 = [];
+  // var arr4 = [];
+  // var arr = [];
+  // while (arr1.length < 4) {
+  //   var n =  Math.round( Math.random() * 15);
+  //   if (arr1.indexOf(n) < 0) arr1.push(n);
+  // }
+  // while (arr2.length < 4) {
+  //   var n =  Math.round( Math.random() * 15);
+  //   if (arr2.indexOf(n) < 0 && arr1.indexOf(n) < 0) arr2.push(n);
+  // }
+  // while (arr3.length < 4) {
+  //   var n =  Math.round( Math.random() * 15);
+  //   if (arr3.indexOf(n) < 0 && arr1.indexOf(n) < 0 && arr2.indexOf(n) < 0) arr3.push(n);
+  // }
+  // while (arr4.length < 4) {
+  //   var n =  Math.round( Math.random() * 15);
+  //   if (arr4.indexOf(n) < 0 && arr1.indexOf(n) < 0 && arr2.indexOf(n) < 0 && arr3.indexOf(n) < 0) arr4.push(n);
+  // }
+  // arr.push(arr1, arr2, arr3, arr4);
+  // console.log('arr - ' + arr);
+  // console.log('arr[1][1] - ' + arr[1][1]);
+  // $scope.numbers=arr;
+
+  
+  // document.addEventListener("click", function(e){
+  // 	 var i, j, x, y;
+  //    e = e || window.event;
+  //    var target = e.target || e.srcElement,
+  //       text = target.textContent || text.innerText;
+  //    var num = parseInt(text);
+  //    //console.log('e.text - ' + text);
+  //    if (num > 0 && num < 16) {
+  //      for(i=0;i<4;++i) {
+  //      	for(j=0;j<4;++j) {if ($scope.numbers[i][j] == num) { x = i; y = j; }} 
+  //      }
+  //    console.log('x=' + x + ',   y=' + y);
+  //    console.log('before $scope.numbers' + $scope.numbers);
+  //    if ($scope.numbers[x][y+1] == 0) {$scope.numbers[x][y+1] = num;  $scope.numbers[x][y] = 0;}
+  //    if ($scope.numbers[x][y-1] == 0) {$scope.numbers[x][y-1] = num;  $scope.numbers[x][y] = 0;}
+  //    console.log('after $scope.numbers' + $scope.numbers);
+  //    };
+
+  //    //event right left    up down
+  // });
+
+  var gameOver = function(arr){
+  	var count = 0;
+    for(var i=0;i<15;i++) {if (arr[i] == i+1) ++count;}
+    if (count == 15) alert('GAME OVER!');
+  }
+
+
+  $scope.moveNum = function(index){
+  	var nums = angular.element(document.querySelectorAll(".number"));
+    if (index > 0 && index < 16) {
+
+      var num = parseInt(String(nums[index].innerHTML).slice(34, 36));
+      //console.log('num - ' + num);
+      //console.log('xy - ' + $scope.numbers.indexOf(num));
+
+
+      var rect0 = document.getElementById('num0').getBoundingClientRect();
+      var rect = document.getElementById('num'+num).getBoundingClientRect();
+      //console.log('coords - ' + rect.top + ', ' + rect.left);
+      // var pos = $scope.numbers.indexOf(num);
+      // var pos0 = $scope.numbers.indexOf(0);
+
+      //console.log('pos=' + pos + ',   pos0=' + pos0);
+
+       if (rect.top - rect0.top == 110 && rect.left == rect0.left) {
+        document.getElementById('num0').style.top = ( isNaN(parseInt(document.getElementById('num0').style.top)) ) ? ('110px') : (parseInt(document.getElementById('num0').style.top) + 110 + 'px');
+        document.getElementById('num'+num).style.top = ( isNaN(parseInt(document.getElementById('num'+num).style.top)) ) ? ('-110px') : (parseInt(document.getElementById('num'+num).style.top) - 110 + 'px');
+        //$scope.numbers[pos0] = num; $scope.numbers[pos] = 0;
+
+      }
+       else if (rect.top - rect0.top == -110 && rect.left == rect0.left) {
+       	document.getElementById('num0').style.top = ( isNaN(parseInt(document.getElementById('num0').style.top)) ) ? ('-110px') : (parseInt(document.getElementById('num0').style.top) - 110 + 'px');
+         document.getElementById('num'+num).style.top = ( isNaN(parseInt(document.getElementById('num'+num).style.top)) ) ? ('110px') : (parseInt(document.getElementById('num'+num).style.top) + 110 + 'px');
+         //$scope.numbers[pos0] = num; $scope.numbers[pos] = 0;
+
+       }
+       else if (rect.top == rect0.top && rect.left - rect0.left == 110) {
+       	document.getElementById('num0').style.left = ( isNaN(parseInt(document.getElementById('num0').style.left)) ) ? ('110px') : (parseInt(document.getElementById('num0').style.left) + 110 + 'px');
+         document.getElementById('num'+num).style.left = ( isNaN(parseInt(document.getElementById('num'+num).style.left)) ) ? ('-110px') : (parseInt(document.getElementById('num'+num).style.left) - 110 + 'px');
+         //$scope.numbers[pos] = 0; $scope.numbers[pos0] = num;
+         //console.log('$scope.numbers - ' + $scope.numbers);
+
+         //gameOver($scope.numbers);
+       }
+       else if (rect.top == rect0.top && rect.left - rect0.left == -110) {
+       	document.getElementById('num0').style.left = ( isNaN(parseInt(document.getElementById('num0').style.left)) ) ? ('-110px') : (parseInt(document.getElementById('num0').style.left) - 110 + 'px');
+         document.getElementById('num'+num).style.left = ( isNaN(parseInt(document.getElementById('num'+num).style.left)) ) ? ('110px') : (parseInt(document.getElementById('num'+num).style.left) + 110 + 'px');
+         //$scope.numbers[pos0] = num; $scope.numbers[pos] = 0;
+          //         $timeout(function(){
+  	       //          var count = 0;
+  	       //          var pos = $scope.numbers.indexOf(num);
+          //           var pos0 = $scope.numbers.indexOf(0);
+  	       //          $scope.numbers[pos] = 0; $scope.numbers[pos0] = num;
+    						// 		for(var i=0;i<15;i++) {if ($scope.numbers[i] == i+1) ++count;}
+    						// 		if (count == 15) { alert('GAME OVER!');
+    						// 	  $scope.numbers=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]; }
+  								// },600);
+       }
+       else {}
+      //$timeout(gameOver($scope.numbers),3000);
+    
+    } 
+  }
+  
+
+});
+
+
+</script>
+
+
+</body>
+</html>
